@@ -1,13 +1,13 @@
 package org.drools.pojorule;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+
 import org.drools.model.Drools;
 import org.drools.model.Rule;
 import org.drools.model.Variable;
 import org.drools.model.View;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 
 public class PojoRuleAnalyzer {
     
@@ -28,6 +28,7 @@ public class PojoRuleAnalyzer {
     public static PojoRuleDescr analyze(Class<?> clazz) {
         PojoRuleDescr ruleDescr = new PojoRuleDescr();
         ruleDescr.setRuleName(clazz.getSimpleName());
+        ruleDescr.setPackage(clazz.getPackage().getName());
 
         Object pojoInstance;
         try {

@@ -1,5 +1,9 @@
 package org.drools.pojorule;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.drools.model.Consequence;
 import org.drools.model.Rule;
 import org.drools.model.Variable;
@@ -8,15 +12,12 @@ import org.drools.model.consequences.ConsequenceBuilder;
 import org.drools.model.functions.BlockN;
 import org.drools.model.impl.RuleImpl;
 
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
 public class PojoRuleDescr {
 
     private Object pojoInstance;
 
     private String ruleName;
+    private String pkg;
 
     private Map<String, Variable> vars = new HashMap<String, Variable>();
 
@@ -41,6 +42,14 @@ public class PojoRuleDescr {
 
     void setRuleName(String ruleName) {
         this.ruleName = ruleName;
+    }
+
+    public String getPackage() {
+        return pkg;
+    }
+
+    public void setPackage( String pkg ) {
+        this.pkg = pkg;
     }
 
     public View getWhen() {
@@ -88,7 +97,7 @@ public class PojoRuleDescr {
                                                           .execute(new MethodInvoker(pojoInstance, then))
                                                           .setUsingDrools(usingDroolsInConsequence)
                                                           .get();
-        return new RuleImpl(ruleName, when, consequence, null);
+        return new RuleImpl(pkg, ruleName, null, when, consequence, null);
     }
 
     public static class MethodInvoker implements BlockN {
